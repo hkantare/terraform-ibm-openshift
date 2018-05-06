@@ -10,8 +10,7 @@ variable "app_count" {
   default = 1
 }
 
-variable "ssh_public_key" {
-}
+variable "ssh_public_key" {}
 
 variable "ssh-label" {
   default = "ssh_key_openshift"

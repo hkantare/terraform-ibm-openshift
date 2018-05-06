@@ -1,0 +1,46 @@
+ansible_callback_facts_yaml: /root/.config/openshift/.ansible/callback_facts.yaml
+ansible_inventory_path: /root/.config/openshift/hosts
+ansible_log_path: /tmp/ansible.log
+deployment:
+  ansible_ssh_user: root
+  hosts:
+  - connect_to: 10.40.193.11
+    hostname: master-ose-0b0689d4a2.ibm.com
+    ip: 10.40.193.11
+    public_hostname: master-ose-0b0689d4a2.ibm.com.xip.io
+    public_ip: 173.192.80.54
+    roles:
+    - master
+    - etcd
+    - storage
+  - connect_to: 10.40.193.14
+    hostname: app-ose-0b0689d4a2.ibm.com
+    ip: 10.40.193.14
+    public_hostname: app-ose-0b0689d4a2.ibm.com.xip.io
+    public_ip: 184.172.46.189
+    roles:
+    - node
+  - connect_to: 10.40.193.12
+    hostname: infra-ose-0b0689d4a2.ibm.com
+    ip: 10.40.193.12
+    node_labels: '{''region'': ''infra''}'
+    public_hostname: infra-ose-0b0689d4a2.ibm.com.xip.io
+    public_ip: 50.22.9.58
+    roles:
+    - node
+  master_routingconfig_subdomain: ''
+  openshift_disable_check: docker_image_availability,docker_storage,memory_availability,package_availability,package_version
+  openshift_master_identity_providers: [{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
+  openshift_master_cluster_hostname: None
+  openshift_master_cluster_public_hostname: None
+  proxy_exclude_hosts: ''
+  proxy_http: ''
+  proxy_https: ''
+  roles:
+    etcd: {}
+    master: {}
+    node: {}
+    storage: {}
+variant: openshift-enterprise
+variant_version: '3.6'
+version: v2

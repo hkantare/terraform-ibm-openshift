@@ -39,7 +39,7 @@ Refer to the documentation [here](), for details about the infrastructure elemen
    ```
    ...
 
-   Apply complete! Resources: 20 added, 0 changed, 0 destroyed.
+   Apply complete! Resources: 37 added, 0 changed, 0 destroyed.
    ```
 
 ## Installing Red Hat OpenShift on IBM Cloud Infrastrcture
@@ -49,29 +49,19 @@ The Bastion node has access to the Internet, and it is used to manually download
 
 ### Prepare to install Red Hat OpenShift
 
-1. SSH into the Bastion node
-  
-   ``` console
-   $ make ssh-bastion
-   bastion$ 
-   ```
 1. You have to setup the RHEL subscription, for disconnected install of OpenShift from Bastion node - using the following procedure:
    
-   ``` console
-   bastion$ subscription-manager unregister
-   bastion$ rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
-   bastion$ subscription-manager register --serverurl subscription.rhsm.redhat.com:443/subscription --baseurl cdn.redhat.com -u <username> -p <password>
-   bastion$ subscription-manager attach --pool=8a85f98c604ec2e20160514b45352fb0
-   bastion$ subscription-manager repos --disable="*"
-   bastion$ subscription-manager repos --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpms" --enable="rhel-7-server-optional-rpms" --enable="rhel-7-server-ose-3.6-rpms"
-   ```
-1. Setup Bastion as the local-repo for installing OpenShift, by running the following
-   
-   ``` console
-   # Setup local-repo in bastion node
-   bastion$ setup-bastion-repo.sh
-   ```
+  make rhn_username=<rhn_username> rhn_password=<rhn_password> bastion
 
+2. Setup Bastion as the local-repo for installing OpenShift, by running the following
+   
+  make local_repo
+
+3. Setup Master , Infra and app node for installing Openshift, by running the following
+
+  ``` console
+  $ make ose_nodes
+  ```
 
 ### Install Red Hat OpenShift
 
@@ -80,17 +70,6 @@ To install OpenShift on the cluster, just run:
    $ make openshift
    ```
 
-Once the setup is complete, just run:
-
-   ``` console
-   $ make browse-openshift
-   ```
-
-To open a browser to admin console, use the following credentials to login:
-   ``` console
-   Username: admin
-   Password: 123
-   ```
 
 ## Post-install configuration of Red Hat 
 
@@ -102,7 +81,10 @@ To open a browser to admin console, use the following credentials to login:
 
 ## Destroy the OpenShift cluster
 
-\[Work in Progress\]
+Bring Down your cluster with:
+  ``` console
+   $ terraform destroy
+   ```
 
 ## Troubleshooting
 
